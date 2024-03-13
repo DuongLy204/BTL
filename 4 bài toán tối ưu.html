@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Traveling Salesman Problem</h2>
+
+<p id="demo"></p>
+
+<button onclick="showResult()">Hiển thị kết quả</button>
+
+<script>
+// Số lượng thành phố
+var n = 4;
+
+// Ma trận chi phí
+var cost = [
+    [0, 10, 15, 20],
+    [10, 0, 35, 25],
+    [15, 35, 0, 30],
+    [20, 25, 30, 0]
+];
+
+// Hàm để tìm chu trình Hamilton có trọng số nhỏ nhất
+function tsp(cost) {
+    // Khởi tạo mảng s với các giá trị từ 0 đến n-1
+    var s = new Array(n);
+    for (var i = 0; i < n; i++) {
+        s[i] = i;
+    }
+
+    var min_cost = Infinity;
+    var best_path = [];
+
+    // Sinh tất cả các hoán vị của các thành phố
+    do {
+        var city_cost = 0;
+
+        // Tính toán chi phí của đường đi hiện tại
+        for (var i = 0; i < s.length - 1; i++) {
+            city_cost += cost[s[i]][s[i+1]];
+        }
+        city_cost += cost[s[s.length-1]][s[0]];
+
+        // Cập nhật chi phí nhỏ nhất và đường đi nếu chi phí hiện tại thấp hơn
+        if (city_cost < min_cost) {
+            min_cost = city_cost;
+            best_path = s.slice();
+        }
+
+    } while (nextPermutation(s));
+
+    return {path: best_path, cost: min_cost};
+}
+
+// Hàm để sinh hoán vị tiếp theo theo thứ tự từ điển
+function nextPermutation(s) {
+    for (var i = s.length - 2; i >= 0; i--) {
+        if (s[i] < s[i+1]) {
+            for (var j = s.length - 1; j > i; j--) {
+                if (s[j] > s[i]) {
+                    var temp = s[i];
+                    s[i] = s[j];
+                    s[j] = temp;
+                    s = s.slice(0, i+1).concat(s.slice(i+1).reverse());
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+// Hàm hiển thị kết quả
+function showResult() {
+    var result = tsp(cost);
+    document.getElementById("demo").innerHTML = "Đường đi tốt nhất: " + result.path.join(" -> ") + "<br>Chi phí tối thiểu: " + result.cost;
+}
+</script>
+
+</body>
+</html>

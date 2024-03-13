@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- CSS để tăng cường trực quan cho trang web -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        h2 {
+            color: #333;
+        }
+        #demo {
+            color: #666;
+            font-size: 1.2em;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Đếm số nguyên dương có 3 chữ số khác nhau</h2>
+
+<button onclick="countNumbers()">In kết quả</button>
+
+<p id="demo"></p>
+
+<script>
+    function countNumbers() {
+        // Khởi tạo biến đếm
+        var count = 0;
+
+        // Vòng lặp cho chữ số đầu tiên
+        for (var i = 1; i <= 9; i++) {
+            // Vòng lặp cho chữ số thứ hai
+            for (var j = 0; j <= 9; j++) {
+                // Kiểm tra chữ số thứ hai khác chữ số đầu tiên
+                if (j != i) {
+                    // Vòng lặp cho chữ số thứ ba
+                    for (var k = 0; k <= 9; k++) {
+                        // Kiểm tra chữ số thứ ba khác cả hai chữ số trước đó
+                        if (k != i && k != j) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Hiển thị kết quả
+        document.getElementById("demo").innerHTML = "Có " + count + " số nguyên dương có 3 chữ số khác nhau.";
+    }
+</script>
+
+</body>
+</html>

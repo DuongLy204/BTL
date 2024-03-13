@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Liệt kê tất cả các dãy con có độ dài từ 1 đến 3 của dãy số {1, 2, 3, 4}</h2>
+
+<button onclick="generateSubarrays()">Hiển thị kết quả</button>
+
+<div id="demo"></div>
+
+<script>
+/* Hàm liệt kê tất cả các dãy con có độ dài từ 1 đến 3 */
+function subArrays(arr, start, temp, target) {
+    /* Nếu dãy con có độ dài từ 1 đến 3, thêm nó vào danh sách kết quả */
+    if (temp.length >= 1 && temp.length <= 3) {
+        target.push([...temp]);
+    }
+    /* Duyệt qua tất cả các phần tử còn lại của mảng */
+    for (let i = start; i < arr.length; i++) {
+        /* Thêm phần tử hiện tại vào dãy con */
+        temp.push(arr[i]);
+        /* Gọi đệ quy hàm để xử lý phần còn lại của mảng */
+        subArrays(arr, i + 1, temp, target);
+        /* Loại bỏ phần tử hiện tại khỏi dãy con */
+        temp.pop();
+    }
+    return;
+}
+
+function generateSubarrays() {
+    /* Mảng ban đầu */
+    let arr = [1, 2, 3, 4];
+    /* Mảng chứa kết quả */
+    let target = [];
+    /* Gọi hàm để liệt kê tất cả các dãy con */
+    subArrays(arr, 0, [], target);
+
+    /* Hiển thị kết quả lên trang web */
+    let demo = document.getElementById("demo");
+    demo.innerHTML = ""; // Xóa kết quả cũ
+    for (let i = 0; i < target.length; i++) {
+        /* Tạo một thẻ div mới */
+        let div = document.createElement("div");
+        /* Đặt nội dung của thẻ div là dãy con */
+        div.textContent = JSON.stringify(target[i]);
+        /* Thêm class cho thẻ div */
+        div.className = "subarray";
+        /* Thêm thẻ div vào khung chứa kết quả */
+        demo.appendChild(div);
+    }
+}
+</script>
+
+</body>
+</html>
